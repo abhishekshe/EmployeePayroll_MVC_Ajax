@@ -1,0 +1,60 @@
+﻿@model IEnumerable<EmployeePayroll_Ajax.Models.EmployeeModel>
+<div class="col-md-8 offset-md-2">
+
+    <h1 class="text-center"> Employee Payroll</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddEmployee","Employee",null,Context.Request.Scheme)','New Employee')" class="btn btn-success text-white"><i class="fas faa-random"></i> New Employee</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notes)
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.Emp_Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Emp_Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Emp_Id">Delete</a>*@
+                        <div>
+                            <a onclick="showInPopup('@Url.Action("UpdateEmployee","Employee",new {id=item.Emp_Id},Context.Request.Scheme)','Update Employee')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i></a>
+                            <form asp-action="Delete" asp-route-id="@item.Emp_Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                                    <input type="hidden" asp-for="@item.Emp_Id" />
+                                   @* <i class="fa-solid fa-trash-arrow-up"></i>
+                                    <input type="submit" value="Delete" class="btn btn-danger"   />*@
+                                    <button class="btn btn-danger text-white" type="submit"> <i class="fa-solid fa-trash-can"></i></button>
+                            </form>
+              
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
